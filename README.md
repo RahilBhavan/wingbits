@@ -2,7 +2,7 @@
 
 Community tools for the [Wingbits Customer API](https://customer-api.wingbits.com/docs/) — ADS-B flight data and GPS jamming intelligence from the decentralized flight-tracking network on Solana.
 
-[![CI](https://github.com/RahilBhavan/wingbits-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/RahilBhavan/wingbits-sdk/actions/workflows/ci.yml)
+[![CI](https://github.com/RahilBhavan/wingbits/actions/workflows/ci.yml/badge.svg)](https://github.com/RahilBhavan/wingbits/actions/workflows/ci.yml)
 
 ## Packages
 
