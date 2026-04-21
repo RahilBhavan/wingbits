@@ -1,0 +1,7 @@
+tests/
+.github/
+coverage/
+docs/
+vitest.config.ts
+tsup.config.ts
+tsconfig.json

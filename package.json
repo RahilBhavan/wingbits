@@ -1,0 +1,16 @@
+{
+  "name": "wingbits",
+  "private": true,
+  "description": "Wingbits monorepo — SDK and CLI for the Wingbits Customer API",
+  "license": "MIT",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "wingbits": "bun ./packages/cli/dist/cli.js",
+    "build": "bun run --filter wingbits-sdk build && bun run --filter wingbits-cli build",
+    "test": "bun run --filter wingbits-sdk test && bun run --filter wingbits-cli test",
+    "test:coverage": "bun run --filter wingbits-sdk test:coverage && bun run --filter wingbits-cli test:coverage",
+    "typecheck": "bun run --filter wingbits-sdk typecheck && bun run --filter wingbits-cli typecheck",
+    "smoke": "bun run --filter wingbits-sdk smoke"
+  },
+  "engines": { "node": ">=18" }
+}

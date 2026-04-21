@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node-version }} + Bun)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck SDK
+        run: bun run --filter wingbits-sdk typecheck
+
+      - name: Typecheck CLI
+        run: bun run --filter wingbits-cli typecheck
+
+      - name: Test SDK with coverage
+        run: bun run --filter wingbits-sdk test:coverage
+
+      - name: Build SDK
+        run: bun run --filter wingbits-sdk build
+
+      - name: Test CLI with coverage
+        run: bun run --filter wingbits-cli test:coverage
+
+      - name: Build CLI
+        run: bun run --filter wingbits-cli build
+
+  publish-sdk:
+    name: Publish wingbits-sdk to npm
+    needs: test
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - run: bun install --frozen-lockfile
+      - run: bun run --filter wingbits-sdk build
+      - run: npm publish
+        working-directory: packages/sdk
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

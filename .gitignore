@@ -1,0 +1,9 @@
+.cursor/
+node_modules/
+dist/
+coverage/
+*.env
+.env.local
+packages/*/node_modules/
+packages/*/dist/
+packages/*/coverage/
